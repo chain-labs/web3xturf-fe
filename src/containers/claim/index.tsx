@@ -225,9 +225,13 @@ const ClaimContainer = ({ query }: Props) => {
   };
 
   return (
-    <div>
+    <div className="border border-black flex flex-col items-center mt-10 p-6 rounded-lg mx-16 bg-slate-100">
       <ToastContainer />
-      <button className="bg-white" onClick={handleLogin}>
+      <h1 className="text-5xl bg-transparent">{process.env.NEXT_PUBLIC_EVENT_NAME}</h1>
+      <button
+        className="bg-blue-500 px-4 py-2 rounded-md text-white mt-16"
+        onClick={handleLogin}
+      >
         Login & Claim
       </button>
     </div>

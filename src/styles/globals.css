@@ -4,7 +4,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500;600;700&display=swap');
 
-* {
+body {
   background-color: white;
   font-family: 'Inconsolata', monospace;
 }

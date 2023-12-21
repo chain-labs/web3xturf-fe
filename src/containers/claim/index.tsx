@@ -52,7 +52,7 @@ const Web3AuthOptions: Web3AuthOptions = {
 const web3auth = new Web3Auth(Web3AuthOptions);
 
 const ClaimContainer = ({ query }: Props) => {
-  const [proofs, setProofs] = useState(null);
+  const [proofs, setProofs] = useState([]);
 
   useEffect(() => {
     if (query?.batchid) {
@@ -67,6 +67,8 @@ const ClaimContainer = ({ query }: Props) => {
           });
           const leaf = ethers.utils.keccak256(hashQueryData(query));
           const proofs = tree.getHexProof(leaf);
+          console.log("proofs sire", { proofs });
+
           setProofs(proofs);
         });
       });
@@ -130,13 +132,26 @@ const ClaimContainer = ({ query }: Props) => {
         progress: undefined,
         theme: "dark",
       });
+
+      const hash = hashQueryData(query);
+
+      console.log("It's here", {
+        b: query?.batchid,
+        address,
+        hash,
+        secretHash,
+        proofs,
+      });
+
       const minTx = await contract.populateTransaction.mintTicket(
         address,
         BigNumber.from(query?.batchid),
-        hashQueryData(query),
+        hash,
         secretHash,
-        proofs
+        proofs,
+        { value: 0 }
       );
+
       const tx1 = {
         to: CONTRACT_ADDRESS,
         data: minTx.data,
@@ -151,13 +166,7 @@ const ClaimContainer = ({ query }: Props) => {
         address,
       });
 
-      const userOp = await biconomySmartAccount.buildUserOp([tx1], {
-        overrides: {
-          maxFeePerGas: ethers.utils.parseUnits("0.1"),
-          maxPriorityFeePerGas: ethers.utils.parseUnits("0.1"),
-        },
-      });
-      console.log("Hey Man User Op is this", { userOp, biconomySmartAccount });
+      const userOp = await biconomySmartAccount.buildUserOp([tx1]);
 
       const biconomyPaymaster =
         biconomySmartAccount.paymaster as IHybridPaymaster<SponsorUserOperationDto>;
@@ -178,14 +187,32 @@ const ClaimContainer = ({ query }: Props) => {
           paymasterServiceData
         );
       console.log({ paymasterAndDataResponse });
+      if (
+        paymasterAndDataResponse.callGasLimit &&
+        paymasterAndDataResponse.verificationGasLimit &&
+        paymasterAndDataResponse.preVerificationGas
+      ) {
+        // Returned gas limits must be replaced in your op as you update paymasterAndData.
+        // Because these are the limits paymaster service signed on to generate paymasterAndData
+        // If you receive AA34 error check here..
+
+        userOp.callGasLimit = paymasterAndDataResponse.callGasLimit;
+        userOp.verificationGasLimit =
+          paymasterAndDataResponse.verificationGasLimit;
+        userOp.preVerificationGas = paymasterAndDataResponse.preVerificationGas;
+      }
 
       userOp.paymasterAndData = paymasterAndDataResponse.paymasterAndData;
-      console.log({ biconomySmartAccount, paymasterAndDataResponse, userOp });
+      console.log("hehe", {
+        biconomySmartAccount,
+        paymasterAndDataResponse,
+        userOp,
+      });
       const userOpResponse = await biconomySmartAccount.sendUserOp(userOp);
       console.log({ userOpResponse });
       const { receipt } = await userOpResponse.wait(1);
       toast.success(
-        `🪔✨ Your gift has sparked joy! 🎁 May it light up your loved one's Diwali. ✨`,
+        `✨ Congratulations! You have claimed your NFT Ticket! 🎁  ✨`,
         {
           position: "top-right",
           autoClose: 18000,

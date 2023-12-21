@@ -22,14 +22,14 @@ export const getMerkleHashes = async (cid: string) => {
 };
 
 export const FETCH_TREE_CID = async (id: string) => {
-  //   const tree_cid = await client.query({
-  //     query: FETCH_TREE_CID_QUERY,
-  //     variables: {
-  //       id,
-  //     },
-  //   });
+  const tree_cid = await client.query({
+    query: FETCH_TREE_CID_QUERY,
+    variables: {
+      id,
+    },
+  });
 
-  //   console.log({ tree_cid });
+  console.log({ tree_cid });
 
-  return "QmWN45uaaBxr2xg6HVnWXUYumxf8SLeGKkDZgTc5Xo2EHw";
+  return tree_cid.data;
 };

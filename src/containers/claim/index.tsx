@@ -59,8 +59,8 @@ const ClaimContainer = ({ query }: Props) => {
       console.log({ batchId: query.batchid });
 
       FETCH_TREE_CID(query?.batchid).then((data) => {
-        // const hashCID = data.batches?.[0]?.cid;
-        getMerkleHashes(data).then((hashes) => {
+        const hashCID = data?.batches?.[0]?.cid;
+        getMerkleHashes(hashCID).then((hashes) => {
           const leafs = hashes.map((entry) => ethers.utils.keccak256(entry));
           const tree = new MerkleTree(leafs, ethers.utils.keccak256, {
             sortPairs: true,
@@ -227,7 +227,9 @@ const ClaimContainer = ({ query }: Props) => {
   return (
     <div className="border border-black flex flex-col items-center mt-10 p-6 rounded-lg mx-16 bg-slate-100">
       <ToastContainer />
-      <h1 className="text-5xl bg-transparent">{process.env.NEXT_PUBLIC_EVENT_NAME}</h1>
+      <h1 className="text-5xl bg-transparent">
+        {process.env.NEXT_PUBLIC_EVENT_NAME}
+      </h1>
       <button
         className="bg-blue-500 px-4 py-2 rounded-md text-white mt-16"
         onClick={handleLogin}

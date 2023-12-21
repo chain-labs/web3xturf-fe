@@ -55,16 +55,14 @@ export const handleEncryptandPin = async (
   console.log({ NFT_ADDRESS });
 
   // Fetch event owner address from Subgrqph to be used for access control condition
-  // const eventData = await client.query({
-  //   query: FETCH_EVENT_OWNER_QUERY,
-  //   variables: {
-  //     address: NFT_ADDRESS,
-  //   },
-  // });
-  // console.log(eventData);
-  // const eventOwnerAddress = eventData.data.simplrEvents[0].owner.address;
-
-  const eventOwnerAddress = "0xd18Cd50a6bDa288d331e3956BAC496AAbCa4960d";
+  const eventData = await client.query({
+    query: FETCH_EVENT_OWNER_QUERY,
+    variables: {
+      address: NFT_ADDRESS,
+    },
+  });
+  console.log(eventData);
+  const eventOwnerAddress = eventData.data.simplrEvents[0].owner.address;
 
   // Define access control conditions
   const accessControlConditions = getAccessControlConditions([

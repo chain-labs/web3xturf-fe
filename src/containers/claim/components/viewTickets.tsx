@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import TicketTile from "./TicketTile";
 import FETCH_REVEALED from "@/graphql/query/fetchRevealed";
 import { NFT_ADDRESS } from "@/constants";
+import { ArrowCycle } from "akar-icons";
 
 type Props = {
   smartAccount: BiconomySmartAccountV2;
@@ -15,6 +16,7 @@ const ViewTickets = ({ smartAccount }: Props) => {
   const [ticketURI, setTicketURI] = useState<string>();
   const [revealed, setRevealed] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [fetching, setFetching] = useState(true);
 
   const fetchRevealed = useCallback(async () => {
     const res = await client.query({
@@ -50,6 +52,7 @@ const ViewTickets = ({ smartAccount }: Props) => {
         id_contains_nocase: holderAddress.toLowerCase(),
       },
     });
+    setFetching(false);
     return tickets.data?.holders?.[0]?.tickets;
   }, [smartAccount._getAccountContract, smartAccount.accountAddress]);
 
@@ -69,24 +72,48 @@ const ViewTickets = ({ smartAccount }: Props) => {
   return (
     <div className=" mt-6 w-[80vw]">
       <h1 className="md:text-5xl text-2xl font-bold mb-4">Your Tickets</h1>
-      <div className="flex flex-wrap gap-4">
-        {userTickets?.length ? (
-          userTickets?.map((ticket) => (
-            <TicketTile
-              ticket={ticket}
-              ticketURI={ticketURI}
-              isRevealed={revealed}
-              key={ticket.dataCid}
-            />
-          ))
-        ) : (
-          <h3 className="md:text-2xl bg-green-100 md:px-4 md:py-2 px-2 py-1 rounded-md">
-            No Tickets claimed yet...
-          </h3>
-        )}
-      </div>
+      {fetching ? (
+        <span className="animate-spin">
+          <ArrowCycle strokeWidth={2} size={30} />
+        </span>
+      ) : (
+        <TicketsList
+          userTickets={userTickets}
+          ticketURI={ticketURI}
+          revealed={revealed}
+        />
+      )}
     </div>
   );
 };
 
 export default ViewTickets;
+
+const TicketsList = ({
+  userTickets,
+  ticketURI,
+  revealed,
+}: {
+  userTickets: any[];
+  ticketURI: string;
+  revealed: boolean;
+}) => {
+  return (
+    <div className="flex flex-wrap gap-4">
+      {userTickets?.length ? (
+        userTickets?.map((ticket) => (
+          <TicketTile
+            ticket={ticket}
+            ticketURI={ticketURI}
+            isRevealed={revealed}
+            key={ticket.dataCid}
+          />
+        ))
+      ) : (
+        <h3 className="md:text-2xl bg-green-100 md:px-4 md:py-2 px-2 py-1 rounded-md">
+          No Tickets claimed yet...
+        </h3>
+      )}
+    </div>
+  );
+};

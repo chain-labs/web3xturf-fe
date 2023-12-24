@@ -252,7 +252,7 @@ const ClaimContainer = ({ query }: Props) => {
   };
 
   return (
-    <div className=" min-h-[100vh] bg-url-bg bg-cover bg-center md:bg-contain">
+    <div className=" min-h-[100vh] bg-url-bg bg-cover md:bg-bottom bg-center md:bg-contain bg-no-repeat">
       <ToastContainer />
       <div className="flex flex-col items-center pt-36 md:pt-0 ">
         <h2 className="text-xs md:text-2xl mt-4">Dunder Mifflin presents</h2>

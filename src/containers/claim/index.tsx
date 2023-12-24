@@ -51,12 +51,19 @@ const Web3AuthOptions: Web3AuthOptions = {
 
 const web3auth = new Web3Auth(Web3AuthOptions);
 
+const MINT_STEPS = {
+  INITIAL: 0,
+  MINTING: 1,
+  MINTED: 2,
+};
+
 const ClaimContainer = ({ query }: Props) => {
   const [proofs, setProofs] = useState([]);
+  const [mintStep, setMintStep] = useState(MINT_STEPS.INITIAL);
 
   useEffect(() => {
     if (query?.batchid) {
-      console.log({ batchId: query.batchid });
+      console.log({ batchId: query.batchid, NFT_ADDRESS });
 
       FETCH_TREE_CID(query?.batchid, NFT_ADDRESS.toLowerCase()).then((data) => {
         const hashCID = data?.batches?.[0]?.cid;
@@ -86,7 +93,17 @@ const ClaimContainer = ({ query }: Props) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Click");
+    setMintStep(MINT_STEPS.MINTING);
+    const toast1 = toast.info("Wrapping up your Gift....", {
+      position: "top-right",
+      autoClose: 6000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
 
     const web3AuthProvider = await web3auth.connect();
 
@@ -113,6 +130,10 @@ const ClaimContainer = ({ query }: Props) => {
     });
     const accounts = await provider.listAccounts();
 
+    const smartAccountAddress = (
+      await biconomySmartAccount._getAccountContract()
+    ).address;
+
     const secretHash = await handleEncryptandPin(address, query, provider);
 
     const abi = [
@@ -122,29 +143,18 @@ const ClaimContainer = ({ query }: Props) => {
     ];
     const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, provider);
     try {
-      const toast1 = toast.info("Wrapping up your Gift....", {
-        position: "top-right",
-        autoClose: 15000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-
       const hash = hashQueryData(query);
 
       console.log("It's here", {
         b: query?.batchid,
-        address,
+        smartAccountAddress,
         hash,
         secretHash,
         proofs,
       });
 
       const minTx = await contract.populateTransaction.mintTicket(
-        address,
+        smartAccountAddress,
         BigNumber.from(query?.batchid),
         hash,
         secretHash,
@@ -163,7 +173,7 @@ const ClaimContainer = ({ query }: Props) => {
         hash: hashQueryData(query),
         secretHash,
         proofs,
-        address,
+        smartAccountAddress,
       });
 
       const userOp = await biconomySmartAccount.buildUserOp([tx1]);
@@ -224,6 +234,7 @@ const ClaimContainer = ({ query }: Props) => {
           theme: "dark",
         }
       );
+      setMintStep(MINT_STEPS.MINTED);
       console.log("", { txHash: receipt.transactionHash });
     } catch (err) {
       console.error({ err });
@@ -242,13 +253,24 @@ const ClaimContainer = ({ query }: Props) => {
 
     console.log({
       module_var: module_var.signer,
-      address,
+      smartAccountAddress,
       accounts,
       biconomySmartAccount,
       secretHash,
     });
 
     console.log("📮done deal", { secretHash });
+  };
+
+  const getButtonText = (state) => {
+    switch (state) {
+      case MINT_STEPS.INITIAL:
+        return "Claim Ticket via Email";
+      case MINT_STEPS.MINTING:
+        return "Claiming....";
+      case MINT_STEPS.MINTED:
+        return "View Tickets";
+    }
   };
 
   return (
@@ -273,7 +295,7 @@ const ClaimContainer = ({ query }: Props) => {
           className="bg-rose-500 px-4 py-2 shadow-xl text-white mt-4"
           onClick={handleLogin}
         >
-          Claim Ticket via Email
+          {getButtonText(mintStep)}
         </button>
       </div>
     </div>

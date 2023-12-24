@@ -29,9 +29,13 @@ import { FETCH_TREE_CID, getMerkleHashes, hashQueryData } from "./utils/hash";
 import { FETCH_TREE_CID_QUERY } from "@/graphql/query/fetchTreeCid";
 import MerkleTree from "merkletreejs";
 import bundler from "./AccountAbstraction/bundler";
+import ViewTickets from "./components/viewTickets";
+import NoClaim from "./components/NoClaim";
+import paymaster from "./AccountAbstraction/paymaster";
 
 type Props = {
   query: QueryProps;
+  noClaim?: boolean;
 };
 
 const Web3AuthOptions: Web3AuthOptions = {
@@ -57,9 +61,11 @@ const MINT_STEPS = {
   MINTED: 2,
 };
 
-const ClaimContainer = ({ query }: Props) => {
+const ClaimContainer = ({ query, noClaim }: Props) => {
   const [proofs, setProofs] = useState([]);
   const [mintStep, setMintStep] = useState(MINT_STEPS.INITIAL);
+  const [viewTickets, setViewTickets] = useState(true);
+  const [smartAccount, setSmartAccount] = useState<BiconomySmartAccountV2>();
 
   useEffect(() => {
     if (query?.batchid) {
@@ -86,10 +92,6 @@ const ClaimContainer = ({ query }: Props) => {
     console.log({ query });
     web3auth.initModal();
   }, [query]);
-
-  const paymaster: IPaymaster = new BiconomyPaymaster({
-    paymasterUrl: PAYMASTER_URL,
-  });
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -128,6 +130,8 @@ const ClaimContainer = ({ query }: Props) => {
       defaultValidationModule: module_var,
       activeValidationModule: module_var,
     });
+
+    setSmartAccount(biconomySmartAccount);
     const accounts = await provider.listAccounts();
 
     const smartAccountAddress = (
@@ -273,6 +277,10 @@ const ClaimContainer = ({ query }: Props) => {
     }
   };
 
+  if (noClaim) {
+    return <NoClaim web3Auth={web3auth} />;
+  }
+
   return (
     <div className=" min-h-[100vh] bg-url-bg bg-cover md:bg-bottom bg-center md:bg-contain bg-no-repeat">
       <ToastContainer />
@@ -297,6 +305,10 @@ const ClaimContainer = ({ query }: Props) => {
         >
           {getButtonText(mintStep)}
         </button>
+
+        {viewTickets && mintStep === MINT_STEPS.MINTED ? (
+          <ViewTickets smartAccount={smartAccount} />
+        ) : null}
       </div>
     </div>
   );

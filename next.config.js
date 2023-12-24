@@ -1,10 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-}
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "nftstorage.link",
+        port: "",
+      },
+    ],
+  },
+};
 
-module.exports = nextConfig
-
+module.exports = nextConfig;
 
 // Injected content via Sentry wizard below
 

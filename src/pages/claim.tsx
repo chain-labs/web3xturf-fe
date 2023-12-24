@@ -26,6 +26,14 @@ const ClaimPage = () => {
     emailid: "",
   });
 
+  const checkQueryValidity = (query: QueryProps) => {
+    const { firstname, lastname, eventname, batchid, emailid } = query;
+    if (!firstname || !lastname || !eventname || !batchid || !emailid) {
+      return false;
+    }
+    return true;
+  };
+
   useEffect(() => {
     const query = router.query;
 
@@ -40,7 +48,7 @@ const ClaimPage = () => {
     }
   }, [router.query]);
 
-  return <ClaimComponent query={query} />;
+  return <ClaimComponent query={query} noClaim={!checkQueryValidity(query)} />;
 };
 
 export default ClaimPage;

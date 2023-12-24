@@ -32,6 +32,7 @@ import bundler from "./AccountAbstraction/bundler";
 import ViewTickets from "./components/viewTickets";
 import NoClaim from "./components/NoClaim";
 import paymaster from "./AccountAbstraction/paymaster";
+import { ArrowCycle } from "akar-icons";
 
 type Props = {
   query: QueryProps;
@@ -306,10 +307,16 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
           </span>
         </h3>
         <button
-          className="bg-rose-500 px-4 py-2 shadow-xl text-white mt-4"
+          className="bg-rose-500 px-4 py-2 shadow-xl text-white mt-4 flex items-center"
           onClick={mintStep === MINT_STEPS.MINTED ? handleView : handleLogin}
+          disabled={mintStep === MINT_STEPS.MINTING}
         >
           {getButtonText(mintStep)}
+          {mintStep === MINT_STEPS.MINTING && (
+            <span className="animate-spin ml-2">
+              <ArrowCycle strokeWidth={2} size={24} />
+            </span>
+          )}
         </button>
 
         {viewTickets && mintStep === MINT_STEPS.MINTED ? (

@@ -22,7 +22,7 @@ import {
   PaymasterMode,
   SponsorUserOperationDto,
 } from "@biconomy/paymaster";
-import { CONTRACT_ADDRESS, PAYMASTER_URL } from "@/constants";
+import { CONTRACT_ADDRESS, NFT_ADDRESS, PAYMASTER_URL } from "@/constants";
 import { handleEncryptandPin } from "./utils/lit";
 import contracts from "@/contracts.json";
 import { FETCH_TREE_CID, getMerkleHashes, hashQueryData } from "./utils/hash";
@@ -58,7 +58,7 @@ const ClaimContainer = ({ query }: Props) => {
     if (query?.batchid) {
       console.log({ batchId: query.batchid });
 
-      FETCH_TREE_CID(query?.batchid).then((data) => {
+      FETCH_TREE_CID(query?.batchid, NFT_ADDRESS.toLowerCase()).then((data) => {
         const hashCID = data?.batches?.[0]?.cid;
         getMerkleHashes(hashCID).then((hashes) => {
           const leafs = hashes.map((entry) => ethers.utils.keccak256(entry));
@@ -252,17 +252,30 @@ const ClaimContainer = ({ query }: Props) => {
   };
 
   return (
-    <div className="border border-black flex flex-col items-center mt-10 p-6 rounded-lg mx-16 bg-slate-100">
+    <div className=" min-h-[100vh] bg-url-bg bg-contain">
       <ToastContainer />
-      <h1 className="text-5xl bg-transparent">
-        {process.env.NEXT_PUBLIC_EVENT_NAME}
-      </h1>
-      <button
-        className="bg-blue-500 px-4 py-2 rounded-md text-white mt-16"
-        onClick={handleLogin}
-      >
-        Login & Claim
-      </button>
+      <div className="flex flex-col items-center">
+        <h2 className="text-2xl mt-4">Dunder Mifflin presents</h2>
+        <h1 className="text-8xl mt-2">A Nutcracker Christmas</h1>
+        <h3 className="text-xl mt-2">
+          Dec 24th, 2023 | 7PM |{" "}
+          <span>
+            <a
+              href={process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL}
+              className="underline"
+            >
+              {`Google Maps`}
+              <span>{"->"}</span>
+            </a>
+          </span>
+        </h3>
+        <button
+          className="bg-rose-500 px-4 py-2 shadow-xl text-white mt-4"
+          onClick={handleLogin}
+        >
+          Claim Ticket via Email
+        </button>
+      </div>
     </div>
   );
 };

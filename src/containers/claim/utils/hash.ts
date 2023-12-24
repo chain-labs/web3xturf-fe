@@ -21,11 +21,12 @@ export const getMerkleHashes = async (cid: string) => {
   return hashes;
 };
 
-export const FETCH_TREE_CID = async (id: string) => {
+export const FETCH_TREE_CID = async (id: string, address: string) => {
   const tree_cid = await client.query({
     query: FETCH_TREE_CID_QUERY,
     variables: {
       id,
+      address,
     },
   });
 

@@ -252,12 +252,12 @@ const ClaimContainer = ({ query }: Props) => {
   };
 
   return (
-    <div className=" min-h-[100vh] bg-url-bg bg-contain">
+    <div className=" min-h-[100vh] bg-url-bg bg-cover bg-center md:bg-contain">
       <ToastContainer />
-      <div className="flex flex-col items-center">
-        <h2 className="text-2xl mt-4">Dunder Mifflin presents</h2>
-        <h1 className="text-8xl mt-2">A Nutcracker Christmas</h1>
-        <h3 className="text-xl mt-2">
+      <div className="flex flex-col items-center pt-36 md:pt-0 ">
+        <h2 className="text-xs md:text-2xl mt-4">Dunder Mifflin presents</h2>
+        <h1 className="text-4xl md:text-8xl mt-2">A Nutcracker Christmas</h1>
+        <h3 className="text-xs md:text-xl mt-2">
           Dec 24th, 2023 | 7PM |{" "}
           <span>
             <a

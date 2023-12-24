@@ -20,6 +20,8 @@ const NoClaim = ({ web3Auth }: Props) => {
   const [smartAccount, setSmartAccount] = useState<BiconomySmartAccountV2>();
   const [address, setAddress] = useState<string>();
   const handleLogin = async (e) => {
+    console.log("login man", web3Auth);
+
     e.preventDefault();
 
     const web3AuthProvider = await web3Auth.connect();

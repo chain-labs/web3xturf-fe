@@ -64,7 +64,7 @@ const MINT_STEPS = {
 const ClaimContainer = ({ query, noClaim }: Props) => {
   const [proofs, setProofs] = useState([]);
   const [mintStep, setMintStep] = useState(MINT_STEPS.INITIAL);
-  const [viewTickets, setViewTickets] = useState(true);
+  const [viewTickets, setViewTickets] = useState(false);
   const [smartAccount, setSmartAccount] = useState<BiconomySmartAccountV2>();
 
   useEffect(() => {
@@ -96,16 +96,6 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setMintStep(MINT_STEPS.MINTING);
-    const toast1 = toast.info("Wrapping up your Gift....", {
-      position: "top-right",
-      autoClose: 6000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
 
     const web3AuthProvider = await web3auth.connect();
 
@@ -137,6 +127,17 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
     const smartAccountAddress = (
       await biconomySmartAccount._getAccountContract()
     ).address;
+
+    const toast1 = toast.info("Wrapping up your Gift....", {
+      position: "top-right",
+      autoClose: 6000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
 
     const secretHash = await handleEncryptandPin(address, query, provider);
 
@@ -281,6 +282,10 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
     return <NoClaim web3Auth={web3auth} />;
   }
 
+  const handleView = () => {
+    setViewTickets(true);
+  };
+
   return (
     <div className=" min-h-[100vh] bg-url-bg bg-cover md:bg-bottom bg-center md:bg-contain bg-no-repeat">
       <ToastContainer />
@@ -293,6 +298,7 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
             <a
               href={process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL}
               className="underline"
+              target="_blank"
             >
               {`Google Maps`}
               <span>{"->"}</span>
@@ -301,7 +307,7 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
         </h3>
         <button
           className="bg-rose-500 px-4 py-2 shadow-xl text-white mt-4"
-          onClick={handleLogin}
+          onClick={mintStep === MINT_STEPS.MINTED ? handleView : handleLogin}
         >
           {getButtonText(mintStep)}
         </button>

@@ -1,23 +1,54 @@
-import NoClaim from "@/containers/claim/components/NoClaim";
-import { Web3Auth, Web3AuthOptions } from "@web3auth/modal";
+import { QueryProps } from "@/containers/claim/types";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 
-const Web3AuthOptions: Web3AuthOptions = {
-  clientId: `${process.env.NEXT_PUBLIC_WEB3AUTH_ID}`,
-  web3AuthNetwork: "sapphire_devnet",
-  authMode: "DAPP",
-  chainConfig: {
-    chainNamespace: "eip155",
-    chainId: "0x13881",
-    rpcTarget: "https://rpc-mumbai.maticvigil.com/",
-    blockExplorer: "https://mumbai.polygonscan.com/",
-    displayName: "Polygon Mumbai",
-    ticker: "MATIC",
-    tickerName: "Matic",
-  },
+const ClaimComponent = dynamic(
+  () => import("@/containers/claim").then((res) => res.default),
+  {
+    ssr: false,
+  }
+);
+
+const ClaimPage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    localStorage.removeItem("openlogin_store");
+    localStorage.removeItem("Web3Auth-cachedAdapter");
+  }, []);
+
+  const [query, setQuery] = useState<QueryProps>({
+    firstname: "",
+    lastname: "",
+    eventname: "",
+    batchid: "",
+    emailid: "",
+  });
+
+  const checkQueryValidity = (query: QueryProps) => {
+    const { firstname, lastname, eventname, batchid, emailid } = query;
+    if (!firstname || !lastname || !eventname || !batchid || !emailid) {
+      return false;
+    }
+    return true;
+  };
+
+  useEffect(() => {
+    const query = router.query;
+
+    if (query) {
+      setQuery({
+        firstname: query.firstname as string,
+        lastname: query.lastname as string,
+        emailid: query.emailid as string,
+        batchid: query.batchid as string,
+        eventname: query.eventname as string,
+      });
+    }
+  }, [router.query]);
+
+  return <ClaimComponent query={query} noClaim={!checkQueryValidity(query)} />;
 };
 
-const web3auth = new Web3Auth(Web3AuthOptions);
-
-export default function Home() {
-  return <NoClaim web3Auth={web3auth} />;
-}
+export default ClaimPage;

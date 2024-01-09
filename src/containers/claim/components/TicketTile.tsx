@@ -34,7 +34,7 @@ const TicketTile = ({
       target="_blank"
     >
       <div className="md:max-w-[250px] max-w-[125px]">
-        <div className="rounded-md border border-green-300 bg-green-100 py-4">
+        <div className="rounded-md border border-yellow-300 bg-orange-100 py-4">
           <div className="relative mb-4 h-24 w-full md:h-32 lg:h-48">
             <Image
               src={ticketImg}

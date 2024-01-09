@@ -14,7 +14,8 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "url-bg": "url('https://ik.imagekit.io/chainlabs/Simplr_Events/Santa%20(2)_oBGuTCKbo_.png?updatedAt=1703390445026')",
+        "url-bg":
+          "url('https://ik.imagekit.io/chainlabs/Simplr_Events/Popcorn%20Day%20Solid%20Background%20(2)_VIh_lXHkh.png?updatedAt=1704393666681')",
       },
       fontFamily: {
         MountainsofChristmas: [
@@ -25,6 +26,7 @@ const config: Config = {
           '"Playfair Display"',
           ...defaultTheme.fontFamily.serif,
         ],
+        Sacramentp: ['"Sacramento"', ...defaultTheme.fontFamily.serif],
       },
     },
   },

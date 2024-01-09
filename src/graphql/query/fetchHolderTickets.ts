@@ -1,19 +1,31 @@
 import { gql } from "@apollo/client";
 
 const FETCH_HOLDER_TICKETS = gql`
-  query FetchHolderTickets($first: Int, $id_contains_nocase: String) {
-    holders(where: { id_contains_nocase: $id_contains_nocase }) {
-      address {
-        address
+  query FetchHolderTickets(
+    $user_address_contains: String,
+    $event_address_contains: Bytes,
+    $first: Int = 10
+  ) {
+    tickets(
+      where: {
+        holder_: { address_contains: $user_address_contains }
+        simplrEvent_: { address_contains: $event_address_contains }
       }
-      tickets(orderBy: tokenId, orderDirection: desc, first: $first) {
-        tokenId
-        metadataCid
-        creationTimeStamp
-        creationTrx
-        dataCid
-        simplrEvent {
-          name
+      orderBy: tokenId
+      orderDirection: desc
+      first: $first
+    ) {
+      tokenId
+      metadataCid
+      creationTimeStamp
+      creationTrx
+      dataCid
+      simplrEvent {
+        name
+      }
+      holder {
+        address {
+          id
         }
       }
     }
@@ -30,5 +42,10 @@ export interface ITicket {
   dataCid: string;
   simplrEvent: {
     name: string;
+  };
+  holder: {
+    address: {
+      id: string;
+    };
   };
 }

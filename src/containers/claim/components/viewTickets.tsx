@@ -1,5 +1,7 @@
 import { client } from "@/components/ApolloClient";
-import FETCH_HOLDER_TICKETS from "@/graphql/query/fetchHolderTickets";
+import FETCH_HOLDER_TICKETS, {
+  ITicket,
+} from "@/graphql/query/fetchHolderTickets";
 import { BiconomySmartAccountV2 } from "@biconomy/account";
 import React, { useCallback, useEffect, useState } from "react";
 import TicketTile from "./TicketTile";
@@ -19,12 +21,15 @@ const ViewTickets = ({ smartAccount }: Props) => {
   const [fetching, setFetching] = useState(true);
 
   const fetchRevealed = useCallback(async () => {
+    console.log({ NFT_ADDRESS: NFT_ADDRESS.toLowerCase() });
+
     const res = await client.query({
       query: FETCH_REVEALED,
-      variables: { address: NFT_ADDRESS },
+      variables: { address: NFT_ADDRESS.toLowerCase() },
     });
 
     const { data } = res;
+
     const isRevealed = !!data?.simplrEvents?.[0]?.isRevealed;
     const ticketURI = data?.simplrEvents?.[0]?.ticketURI;
     const ticketCid = ticketURI?.split("//")[1];
@@ -33,8 +38,6 @@ const ViewTickets = ({ smartAccount }: Props) => {
   }, []);
 
   const fetchHolderTickets = useCallback(async () => {
-    console.log("what");
-
     let holderAddress;
     if (smartAccount.accountAddress) {
       holderAddress = smartAccount.accountAddress;
@@ -43,17 +46,18 @@ const ViewTickets = ({ smartAccount }: Props) => {
       holderAddress: string = (await smartAccount._getAccountContract).address;
     }
 
-    console.log({ holderAddress });
+    console.log({ holderAddress: holderAddress.toLowerCase() });
 
-    const tickets = await client.query({
+    const tickets = await client.query<{ tickets: ITicket[] }>({
       query: FETCH_HOLDER_TICKETS,
       variables: {
         first: 10,
-        id_contains_nocase: holderAddress.toLowerCase(),
+        user_address_contains: holderAddress.toLowerCase(),
+        event_address_contains: NFT_ADDRESS.toLowerCase(),
       },
     });
     setFetching(false);
-    return tickets.data?.holders?.[0]?.tickets;
+    return tickets.data.tickets;
   }, [smartAccount._getAccountContract, smartAccount.accountAddress]);
 
   useEffect(() => {
@@ -68,6 +72,12 @@ const ViewTickets = ({ smartAccount }: Props) => {
   useEffect(() => {
     fetchRevealed().then(() => setLoading(false));
   }, [fetchRevealed]);
+
+  useEffect(() => {
+    if (userTickets) {
+      console.log({ userTickets });
+    }
+  }, [userTickets]);
 
   return (
     <div className=" mt-6 w-[80vw]">

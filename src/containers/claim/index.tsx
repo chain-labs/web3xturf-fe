@@ -288,26 +288,30 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
   };
 
   return (
-    <div className=" min-h-[100vh] bg-url-bg bg-cover md:bg-bottom bg-center md:bg-contain bg-no-repeat">
+    <div className="min-h-[100vh] bg-url-bg bg-cover md:bg-bottom bg-center bg-no-repeat">
       <ToastContainer />
-      <div className="flex flex-col items-center pt-36 md:pt-0 ">
-        <h2 className="text-xs md:text-2xl mt-4">Dunder Mifflin presents</h2>
-        <h1 className="text-4xl md:text-8xl mt-2">A Nutcracker Christmas</h1>
-        <h3 className="text-xs md:text-xl mt-2">
-          Dec 24th, 2023 | 7PM |{" "}
+      <div className="flex flex-col items-center pt-6 md:pt-0 ">
+        <h2 className="font-PlayfairDisplay text-xs md:text-2xl mt-4 font-normal text-orange-900">
+          World Popcorn Federation presents
+        </h2>
+        <h1 className="text-4xl md:text-8xl text-orange-900">
+          Popcorn Day 2024
+        </h1>
+        <h3 className="text-xs md:text-xl mt-2 font-PlayfairDisplay ">
+          Jan 19th, 2024 | 6PM onwards |{" "}
           <span>
             <a
               href={process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL}
               className="underline"
-              target="_blank"
             >
               {`Google Maps`}
               <span>{"->"}</span>
             </a>
           </span>
         </h3>
+        <div className="border-b border-b-orange-900 w-[80vw] mt-6" />
         <button
-          className="bg-rose-500 px-4 py-2 shadow-xl text-white mt-4 flex items-center"
+          className="flex items-center bg-orange-200 px-4 py-2 shadow-xl text-orange-900 mt-4 font-PlayfairDisplay"
           onClick={mintStep === MINT_STEPS.MINTED ? handleView : handleLogin}
           disabled={mintStep === MINT_STEPS.MINTING}
         >

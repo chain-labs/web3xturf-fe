@@ -4,7 +4,7 @@ export const heroText = "Web3xTurf";
 
 export const dateTimeText = "25th Feb 2024 | 8:00 AM - 10:00 AM IST";
 
-export const locationText = "LocoBear Turf, Koramangala | Bangalore";
+export const locationText = "Iqra Games Village, Singasandra | Bangalore";
 
 export const PAGE_TITLE = "Web3XTurf | Bangalore";
 

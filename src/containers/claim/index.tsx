@@ -36,6 +36,7 @@ import { ArrowCycle } from "akar-icons";
 import {
   BG_ELEMENT,
   CALENDAR_ICON,
+  GOOGLE_MAPS_LOCATION,
   LOCATION_ICON,
   LOGO,
   ORGANIZER,
@@ -355,9 +356,11 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
               <div className="h-[24px] w-[24px] relative">
                 <Image src={LOCATION_ICON} fill alt="cal-icon" />
               </div>
-              <h3 className="text-xs md:text-[16px] font-medium ">
-                {locationText}
-              </h3>
+              <a href={GOOGLE_MAPS_LOCATION} target="_blank" rel="noreferrer">
+                <h3 className="text-xs md:text-[16px] font-medium hover:underline">
+                  {locationText}
+                </h3>
+              </a>
             </div>
             <button
               className="flex items-center border-[9px] border-[#E2E7FF] rounded-[35px] bg-white py-[24px] px-[16px] font-black text-[25px] mt-8 text-black-text"

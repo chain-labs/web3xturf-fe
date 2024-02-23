@@ -8,6 +8,8 @@ export const locationText = "Iqra Games Village, Singasandra | Bangalore";
 
 export const PAGE_TITLE = "Web3XTurf | Bangalore";
 
+export const GOOGLE_MAPS_LOCATION = "https://g.co/kgs/rHar4RF";
+
 export const SEO_DESCRIPTION = `Web3XTurf event being held at ${locationText} on ${dateTimeText}.`;
 
 export const SEO_KEYWORDS = "web3xturf, bangalore, web3, simplr, simplr-events";

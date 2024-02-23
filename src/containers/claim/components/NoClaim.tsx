@@ -15,6 +15,7 @@ import {
   BG_ELEMENT,
   BG_GRADIENT,
   CALENDAR_ICON,
+  GOOGLE_MAPS_LOCATION,
   LOCATION_ICON,
   LOGO,
   ORGANIZER,
@@ -132,9 +133,11 @@ const NoClaim = ({ web3Auth }: Props) => {
               <div className="h-[24px] w-[24px] relative">
                 <Image src={LOCATION_ICON} fill alt="cal-icon" />
               </div>
-              <h3 className="text-xs md:text-[16px] font-medium ">
-                {locationText}
-              </h3>
+              <a href={GOOGLE_MAPS_LOCATION} target="_blank" rel="noreferrer">
+                <h3 className="text-xs md:text-[16px] font-medium hover:underline">
+                  {locationText}
+                </h3>
+              </a>
             </div>
             {!address ? (
               <button

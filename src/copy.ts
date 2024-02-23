@@ -4,13 +4,14 @@ export const heroText = "Web3xTurf";
 
 export const dateTimeText = "24th Feb 2024 | 8:00 AM - 10:00 AM IST";
 
-export const locationText = "TBD | Pune";
+export const locationText = "Game On, Koregaon Park | Pune";
 
 export const PAGE_TITLE = "Web3XTurf | Pune";
 
 export const SEO_DESCRIPTION = `Web3XTurf event being held at ${locationText} on ${dateTimeText}.`;
 
-export const SEO_KEYWORDS = "web3xturf, pune, punedao, web3, simplr, simplr-events";
+export const SEO_KEYWORDS =
+  "web3xturf, pune, punedao, web3, simplr, simplr-events";
 
 export const SEO_IMAGE =
   "https://ik.imagekit.io/chainlabs/Mint_Pages/web3xturf/Header%20Image_TeHVC4hMG.jpg?updatedAt=1708675987532";

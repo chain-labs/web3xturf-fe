@@ -33,17 +33,18 @@ const TicketTile = ({
       href={`${process.env.NEXT_PUBLIC_OPENSEA_URL}${NFT_ADDRESS}/${ticket.tokenId}`}
       target="_blank"
     >
-      <div className="md:max-w-[250px] max-w-[125px]">
-        <div className="rounded-md border border-yellow-300 bg-orange-100 py-4">
-          <div className="relative mb-4 h-24 w-full md:h-32 lg:h-48">
+      <div className="max-w-[250px]">
+        <div className="rounded-[32px] border-[8px] border-[#E2E7FF] bg-white overflow-hidden pb-6">
+          <div className="relative mb-4 h-[132px] w-full overflow-hidden">
             <Image
               src={ticketImg}
               fill
               alt="ticket_img"
-              style={{ objectFit: "contain" }}
+              style={{ objectFit: "cover" }}
             />
           </div>
-          <h3 className="md:text-lg text-sm px-4 font-semibold">{`#${ticket.tokenId} ${ticket?.simplrEvent?.name}`}</h3>
+          <h3 className="text-[16px] px-4 font-regular text-black-text">{`Ticket #${ticket.tokenId}`}</h3>
+          <h3 className="text-[24px] px-4 font-bold text-black-text">{`${ticket?.simplrEvent?.name}`}</h3>
         </div>
       </div>
     </a>

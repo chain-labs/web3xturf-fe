@@ -70,17 +70,24 @@ const NoClaim = ({ web3Auth }: Props) => {
 
     setSmartAccount(biconomySmartAccount);
     setAddress(smartAccountAddress);
+    window.open(
+      `${
+        process.env.NEXT_PUBLIC_OPENSEA_URL
+      }${smartAccountAddress}?search[query]=${process.env.NEXT_PUBLIC_EVENT_NAME.replace(
+        " ",
+        "%20"
+      )}`,
+      "_blank",
+      "noreferrer"
+    );
   };
 
   return (
-    <div className=" min-h-[100vh] max-h-[100vh] md:bg-bottom  bg-center  bg-no-repeat overflow-hidden">
-      <div className="bg-black-text before:bg-gradient-url h-[100vh] w-[100vw] before:bg-cover before:bg-no-repeat before:bg-center before:mix-blend-hard-light relative before:absolute before:w-[100vw] before:h-[100vh]">
-        {/* <h2 className="font-PlayfairDisplay text-xs md:text-2xl mt-4 font-normal text-orange-900">
-          {subHeader}
-        </h2> */}
+    <div className=" min-h-[100vh] md:bg-bottom bg-center  bg-no-repeat overflow-hidden">
+      <div className="bg-black-text bg-repeat-y before:bg-gradient-url h-[100vh] w-[100vw] before:bg-cover before:bg-repeat-y before:bg-center before:mix-blend-hard-light relative before:absolute before:w-[100vw] before:h-[100vh] flex justify-center">
         <div className="bg-gradient-url mix-blend-screen h-[775px] w-[775px] rounded-full absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-        <div className="absolute bottom-0 left-1/2 animate-spin-element  mix-blend-color-dodge  border border-black">
-          <div className="relative h-[674px] w-[674px] ">
+        <div className="absolute bottom-0 left-1/2 md:animate-spin-element-md animate-spin-element  mix-blend-color-dodge  border border-black">
+          <div className="relative h-[548px] w-[548px] md:h-[674px] md:w-[674px]">
             <Image
               className="object-contain"
               src={BG_ELEMENT}
@@ -89,8 +96,8 @@ const NoClaim = ({ web3Auth }: Props) => {
             />
           </div>
         </div>
-        <div className="absolute z-2 top-0 left- w-full flex items-end justify-between px-[96px] pt-20">
-          <div className="flex flex-col items-center ">
+        <div className="absolute z-2 top-0 left- w-full flex md:items-end md:justify-between justify-center  md:pt-20 pt-10 flex-wrap md:flex-nowrap md:max-w-[1440px] gap-12 md:gap-0">
+          <div className="flex flex-col items-center order-2 md:order-1 ">
             <h3 className="text-white font-medium text-[16px] opacity-60">
               Organized by:
             </h3>
@@ -106,14 +113,14 @@ const NoClaim = ({ web3Auth }: Props) => {
               />
             </div>
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center order-1 md:order-2 w-[90vw]">
             <div className="relative h-[70px] w-[70px]">
               <Image src={LOGO} fill alt="logo" />d
             </div>
-            <h1 className="text-2xl md:text-[64px] mt-8 text-black-text font-bold">
+            <h1 className="text-[64px] mt-4 text-black-text font-bold">
               {heroText}
             </h1>
-            <div className="mt-10 flex items-center text-black-text">
+            <div className="flex items-center text-black-text">
               <div className="h-[24px] w-[24px] relative">
                 <Image src={CALENDAR_ICON} fill alt="cal-icon" />
               </div>
@@ -129,7 +136,6 @@ const NoClaim = ({ web3Auth }: Props) => {
                 {locationText}
               </h3>
             </div>
-            {/* <div className="border-b border-b-orange-900 w-[80vw] mt-6" /> */}
             {!address ? (
               <button
                 className="flex items-center border-[9px] border-[#E2E7FF] rounded-[35px] bg-white py-[24px] px-[16px] font-black text-[25px] mt-8 text-black-text"
@@ -138,12 +144,16 @@ const NoClaim = ({ web3Auth }: Props) => {
                 <div className="h-[32px] w-[32px] relative mr-2">
                   <Image src={TICKET_ICON} fill alt="cal-icon" />
                 </div>
-                Claim Ticket
+                View Ticket
               </button>
             ) : null}
-            {address ? <ViewTickets smartAccount={smartAccount} /> : null}
+            {/* {address ? (
+              <div className="w-full md:max-w-[1440px] mx-auto flex justify-center md:hidden">
+                <ViewTickets smartAccount={smartAccount} />
+              </div>
+            ) : null} */}
           </div>
-          <div className="flex flex-col items-center self-center">
+          <div className="flex flex-col items-center md:self-center order-3">
             <h3 className="text-white font-medium text-[16px] opacity-60">
               Tickets Powered by:
             </h3>
@@ -157,6 +167,11 @@ const NoClaim = ({ web3Auth }: Props) => {
             </div>
           </div>
         </div>
+        {/* {address ? (
+          <div className="relative w-full md:max-w-[1440px] mx-auto mt-[400px] md:flex justify-center hidden">
+            <ViewTickets smartAccount={smartAccount} />
+          </div>
+        ) : null} */}
       </div>
     </div>
   );

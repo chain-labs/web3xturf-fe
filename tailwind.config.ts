@@ -26,13 +26,19 @@ const config: Config = {
         "black-text": "#293748",
       },
       keyframes: {
-        "spin-element": {
+        "spin-element-md": {
           "0%": { transform: "translate(-50%, 40%) rotate(0deg)" },
           "50%": { transform: "translate(-50%, 40%) rotate(180deg)" },
           "100%": { transform: "translate(-50%, 40%) rotate(360deg)" },
         },
+        "spin-element": {
+          "0%": { transform: "translate(-50%, 55%) rotate(0deg)" },
+          "50%": { transform: "translate(-50%, 55%) rotate(180deg)" },
+          "100%": { transform: "translate(-50%, 55%) rotate(360deg)" },
+        },
       },
       animation: {
+        "spin-element-md": "spin-element-md 120s linear infinite",
         "spin-element": "spin-element 120s linear infinite",
       },
     },

@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 const defaultTheme = require("tailwindcss/defaultTheme");
+import { BACKGROUND_MEDIA } from "./src/constants";
+import { BG_GRADIENT } from "./src/copy";
 
 const config: Config = {
   content: [
@@ -14,19 +16,24 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "url-bg":
-          "url('https://ik.imagekit.io/chainlabs/Simplr_Events/Popcorn%20Day%20Solid%20Background%20(2)_VIh_lXHkh.png?updatedAt=1704393666681')",
+        "url-bg": `url('${BACKGROUND_MEDIA}')`,
+        "gradient-url": `url('${BG_GRADIENT}')`,
       },
       fontFamily: {
-        MountainsofChristmas: [
-          '"Mountains of Christmas"',
-          ...defaultTheme.fontFamily.serif,
-        ],
-        PlayfairDisplay: [
-          '"Playfair Display"',
-          ...defaultTheme.fontFamily.serif,
-        ],
-        Sacramentp: ['"Sacramento"', ...defaultTheme.fontFamily.serif],
+        SpaceGrotesk: ['"Space Grotesk"', ...defaultTheme.fontFamily.serif],
+      },
+      colors: {
+        "black-text": "#293748",
+      },
+      keyframes: {
+        "spin-element": {
+          "0%": { transform: "translate(-50%, 40%) rotate(0deg)" },
+          "50%": { transform: "translate(-50%, 40%) rotate(180deg)" },
+          "100%": { transform: "translate(-50%, 40%) rotate(360deg)" },
+        },
+      },
+      animation: {
+        "spin-element": "spin-element 120s linear infinite",
       },
     },
   },

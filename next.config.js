@@ -2,10 +2,16 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: "https",
         hostname: "nftstorage.link",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "ik.imagekit.io",
         port: "",
       },
     ],

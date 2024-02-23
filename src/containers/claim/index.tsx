@@ -33,6 +33,7 @@ import ViewTickets from "./components/viewTickets";
 import NoClaim from "./components/NoClaim";
 import paymaster from "./AccountAbstraction/paymaster";
 import { ArrowCycle } from "akar-icons";
+import { dateTimeText, heroText, subHeader } from "@/copy";
 
 type Props = {
   query: QueryProps;
@@ -292,13 +293,11 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
       <ToastContainer />
       <div className="flex flex-col items-center pt-6 md:pt-0 ">
         <h2 className="font-PlayfairDisplay text-xs md:text-2xl mt-4 font-normal text-orange-900">
-          World Popcorn Federation presents
+          {subHeader}
         </h2>
-        <h1 className="text-4xl md:text-8xl text-orange-900">
-          Popcorn Day 2024
-        </h1>
+        <h1 className="text-4xl md:text-8xl text-orange-900">{heroText}</h1>
         <h3 className="text-xs md:text-xl mt-2 font-PlayfairDisplay ">
-          Jan 19th, 2024 | 6PM onwards |{" "}
+          {dateTimeText}
           <span>
             <a
               href={process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL}

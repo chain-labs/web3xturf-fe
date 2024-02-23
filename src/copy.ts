@@ -2,17 +2,18 @@ export const subHeader = "";
 
 export const heroText = "Web3xTurf";
 
-export const dateTimeText = "25th Feb 2024 | 8:00 AM - 10:00 AM IST";
+export const dateTimeText = "3rd May 2024 | 9:00 AM - 11:00 AM IST";
 
-export const locationText = "Iqra Games Village, Singasandra | Bangalore";
+export const locationText = "Luna Drive In, Madhapur | Hyderabad";
 
-export const PAGE_TITLE = "Web3XTurf | Bangalore";
+export const PAGE_TITLE = "Web3XTurf | Hyderabad";
 
-export const GOOGLE_MAPS_LOCATION = "https://g.co/kgs/rHar4RF";
+export const GOOGLE_MAPS_LOCATION = "https://maps.app.goo.gl/i2bcrrAc4mDrm1Br6";
 
 export const SEO_DESCRIPTION = `Web3XTurf event being held at ${locationText} on ${dateTimeText}.`;
 
-export const SEO_KEYWORDS = "web3xturf, bangalore, web3, simplr, simplr-events";
+export const SEO_KEYWORDS =
+  "web3xturf, hyderabad, hyddao, web3, simplr, simplr-events";
 
 export const SEO_IMAGE =
   "https://ik.imagekit.io/chainlabs/Mint_Pages/web3xturf/Header%20Image_TeHVC4hMG.jpg?updatedAt=1708675987532";
@@ -36,7 +37,7 @@ export const TICKET_ICON =
   "https://ik.imagekit.io/chainlabs/Mint_Pages/web3xturf/mdi_ticket_XC6zkddoV.svg?updatedAt=1708675494271";
 
 export const ORGANIZER =
-  "https://ik.imagekit.io/chainlabs/Mint_Pages/web3xturf/zohouse_UXHI9mrrC.svg?updatedAt=1708675494365";
+  "https://ik.imagekit.io/chainlabs/Mint_Pages/web3xturf/hyddao_VDQjokxM50.svg?updatedAt=1708675494425";
 
 export const SIMPLR_EVENTS =
   "https://ik.imagekit.io/chainlabs/Mint_Pages/web3xturf/simplr-events_ybNziFnmHf.svg?updatedAt=1708670026934";

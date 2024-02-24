@@ -309,7 +309,7 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
     <div className=" min-h-[100vh] max-h-[100vh] md:bg-bottom  bg-center  bg-no-repeat overflow-hidden">
       <ToastContainer />
       <div className="bg-black-text before:bg-gradient-url h-[100vh] w-[100vw] before:bg-cover before:bg-no-repeat before:bg-center before:mix-blend-hard-light relative before:absolute before:w-[100vw] before:h-[100vh] flex justify-center">
-        <div className="bg-gradient-url mix-blend-screen h-[775px] w-[775px] rounded-full absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <div className="bg-gradient-url mix-blend-screen h-[775px] w-[775px] rounded-full absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[55%]" />
         <div className="absolute bottom-0 left-1/2 md:animate-spin-element-md animate-spin-element  mix-blend-color-dodge  border border-black">
           <div className="relative h-[548px] w-[548px] md:h-[674px] md:w-[674px]">
             <Image
@@ -320,7 +320,7 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
             />
           </div>
         </div>
-        <div className="absolute z-2 top-0 left- w-full flex md:items-end md:justify-between justify-center  md:pt-20 pt-10 flex-wrap md:flex-nowrap md:max-w-[1440px] gap-12 md:gap-0">
+        <div className="absolute z-2 top-0 left- w-full flex md:items-end md:justify-between justify-center  md:pt-10 pt-10 flex-wrap md:flex-nowrap md:max-w-[1280px] gap-12 md:gap-0">
           <div className="flex flex-col items-center order-2 md:order-1 ">
             <h3 className="text-white font-medium text-[16px] opacity-60">
               Organized by:

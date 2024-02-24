@@ -23,6 +23,8 @@ export const GELATO_API_KEY = process.env.NEXT_PUBLIC_GELATO_API_KEY;
 
 export const TEST_NETWORK = toBoolean(process.env.NEXT_PUBLIC_TEST_NETWORK);
 
+export const PINATA_GATEWAY_TOKEN = process.env.NEXT_PUBLIC_PINATA_GATEWAY_TOKEN
+
 export const getNetwork = (): {
   chainId: string;
   blockExplorer: string;

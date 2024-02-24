@@ -86,7 +86,7 @@ const NoClaim = ({ web3Auth }: Props) => {
   return (
     <div className=" min-h-[100vh] md:bg-bottom bg-center  bg-no-repeat overflow-hidden">
       <div className="bg-black-text bg-repeat-y before:bg-gradient-url h-[100vh] w-[100vw] before:bg-cover before:bg-repeat-y before:bg-center before:mix-blend-hard-light relative before:absolute before:w-[100vw] before:h-[100vh] flex justify-center">
-        <div className="bg-gradient-url mix-blend-screen h-[775px] w-[775px] rounded-full absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <div className="bg-gradient-url mix-blend-screen h-[775px] w-[775px] rounded-full absolute top-0 left-1/2 -translate-x-1/2 -translate-y-[55%]" />
         <div className="absolute bottom-0 left-1/2 md:animate-spin-element-md animate-spin-element  mix-blend-color-dodge  border border-black">
           <div className="relative h-[548px] w-[548px] md:h-[674px] md:w-[674px]">
             <Image

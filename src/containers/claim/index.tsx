@@ -22,7 +22,12 @@ import {
   PaymasterMode,
   SponsorUserOperationDto,
 } from "@biconomy/paymaster";
-import { CONTRACT_ADDRESS, NFT_ADDRESS, PAYMASTER_URL } from "@/constants";
+import {
+  CONTRACT_ADDRESS,
+  NFT_ADDRESS,
+  PAYMASTER_URL,
+  TEST_NETWORK,
+} from "@/constants";
 import { handleEncryptandPin } from "./utils/lit";
 import contracts from "@/contracts.json";
 import { FETCH_TREE_CID, getMerkleHashes, hashQueryData } from "./utils/hash";
@@ -56,17 +61,27 @@ type Props = {
 
 const Web3AuthOptions: Web3AuthOptions = {
   clientId: `${process.env.NEXT_PUBLIC_WEB3AUTH_ID}`,
-  web3AuthNetwork: "sapphire_devnet",
+  web3AuthNetwork: TEST_NETWORK ? "sapphire_devnet" : "sapphire_mainnet",
   authMode: "DAPP",
-  chainConfig: {
-    chainNamespace: "eip155",
-    chainId: "0x13881",
-    rpcTarget: "https://rpc-mumbai.maticvigil.com/",
-    blockExplorer: "https://mumbai.polygonscan.com/",
-    displayName: "Polygon Mumbai",
-    ticker: "MATIC",
-    tickerName: "Matic",
-  },
+  chainConfig: TEST_NETWORK
+    ? {
+        chainNamespace: "eip155",
+        chainId: "0x13881",
+        rpcTarget: "https://rpc-mumbai.maticvigil.com/",
+        blockExplorer: "https://mumbai.polygonscan.com/",
+        displayName: "Polygon Mumbai",
+        ticker: "MATIC",
+        tickerName: "Matic",
+      }
+    : {
+        chainNamespace: "eip155",
+        chainId: "0x89",
+        rpcTarget: "https://polygon-rpc.com/",
+        blockExplorer: "https://polygonscan.com/",
+        displayName: "Polygon Mainnet",
+        ticker: "MATIC",
+        tickerName: "Matic",
+      },
 };
 
 const web3auth = new Web3Auth(Web3AuthOptions);
@@ -132,7 +147,7 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
     });
 
     const biconomySmartAccount = await BiconomySmartAccountV2.create({
-      chainId: ChainId.POLYGON_MUMBAI,
+      chainId: TEST_NETWORK ? ChainId.POLYGON_MUMBAI : ChainId.POLYGON_MAINNET,
       bundler: bundler,
       paymaster: paymaster,
       entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
@@ -161,9 +176,9 @@ const ClaimContainer = ({ query, noClaim }: Props) => {
     const secretHash = await handleEncryptandPin(address, query, provider);
 
     const abi = [
-      contracts?.["80001"][0]?.contracts?.["SimplrEvents"]?.["abi"].find(
-        (el) => el.name === "mintTicket"
-      ),
+      contracts?.[TEST_NETWORK ? "80001" : "137"][0]?.contracts?.[
+        "SimplrEvents"
+      ]?.["abi"].find((el) => el.name === "mintTicket"),
     ];
     const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, provider);
     try {

@@ -1,11 +1,15 @@
+import { TEST_NETWORK } from "@/constants";
 import { Bundler, IBundler } from "@biconomy/bundler";
 import { ChainId } from "@biconomy/core-types";
 import { DEFAULT_ENTRYPOINT_ADDRESS } from "@biconomy/modules";
 
+const CHAIN_ID = TEST_NETWORK
+  ? ChainId.POLYGON_MUMBAI
+  : ChainId.POLYGON_MAINNET;
+
 const bundler: IBundler = new Bundler({
-  bundlerUrl:
-    "https://bundler.biconomy.io/api/v2/80001/nJPK7B3ru.dd7f7861-190d-41bd-af80-6877f74b8f44",
-  chainId: ChainId.POLYGON_MUMBAI,
+  bundlerUrl: `https://bundler.biconomy.io/api/v2/${CHAIN_ID}/dewj2189.wh1289hU-7E49-45ic-af80-p1rawpqvn`,
+  chainId: CHAIN_ID,
   entryPointAddress: DEFAULT_ENTRYPOINT_ADDRESS,
 });
 

@@ -80,8 +80,11 @@ const ViewTickets = ({ smartAccount }: Props) => {
   }, [userTickets]);
 
   return (
-    <div className=" mt-6 w-[80vw]">
-      <h1 className="md:text-5xl text-2xl font-bold mb-4">Your Tickets</h1>
+    <div className=" mt-6 w-[80vw] md:w-full">
+      <h1 className="text-[25px] font-bold mb-4 text-center text-white">
+        Here are your ticket(s)!
+      </h1>
+      
       {fetching ? (
         <span className="animate-spin">
           <ArrowCycle strokeWidth={2} size={30} />
@@ -109,7 +112,7 @@ const TicketsList = ({
   revealed: boolean;
 }) => {
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap gap-4 justify-center">
       {userTickets?.length ? (
         userTickets?.map((ticket) => (
           <TicketTile
@@ -120,7 +123,7 @@ const TicketsList = ({
           />
         ))
       ) : (
-        <h3 className="md:text-2xl bg-green-100 md:px-4 md:py-2 px-2 py-1 rounded-md">
+        <h3 className="md:text-2xl md:px-4 md:py-2 px-2 py-1 rounded-md">
           No Tickets claimed yet...
         </h3>
       )}

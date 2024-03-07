@@ -5,8 +5,10 @@ export const pinJson = async (JSONBody) => {
   return (
     await axios.post(url, JSONBody, {
       headers: {
-        pinata_api_key: process.env.NEXT_PUBLIC_PINATA_API_KEY,
-        pinata_secret_api_key: process.env.NEXT_PUBLIC_PINATA_API_SECRET,
+        // pinata_api_key: process.env.NEXT_PUBLIC_PINATA_API_KEY,
+        // pinata_secret_api_key: process.env.NEXT_PUBLIC_PINATA_API_SECRET,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}`,
       },
     })
   ).data.IpfsHash;
@@ -24,8 +26,7 @@ export const pinFile = async (file, eventname) => {
     maxBodyLength: Infinity, //this is needed to prevent axios from erroring out with large files
     headers: {
       "Content-Type": "multipart/form-data",
-      pinata_api_key: process.env.NEXT_PUBLIC_PINATA_API_KEY,
-      pinata_secret_api_key: process.env.NEXT_PUBLIC_PINATA_API_SECRET,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_PINATA_JWT}`,
     },
   });
 };

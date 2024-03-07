@@ -1,4 +1,5 @@
 import { client } from "@/components/ApolloClient";
+import { PINATA_GATEWAY_TOKEN } from "@/constants";
 import { FETCH_TREE_CID_QUERY } from "@/graphql/query/fetchTreeCid";
 import axios from "axios";
 import { ethers } from "ethers";
@@ -15,9 +16,11 @@ export const hashQueryData = (query) => {
 };
 
 export const getMerkleHashes = async (cid: string) => {
-  const url = `https://simplr.mypinata.cloud/ipfs/${cid}`;
+  const url = `https://indigo-acceptable-cephalopod-251.mypinata.cloud/ipfs/${cid}?pinataGatewayToken=${PINATA_GATEWAY_TOKEN}`;
   const { data } = await axios.get(url);
-  const hashes = JSON.parse(Object.keys(data)[0]);
+  const hashes = data;
+  console.log({ data, hashes });
+
   return hashes;
 };
 
